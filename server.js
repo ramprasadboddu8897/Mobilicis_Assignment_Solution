@@ -1,8 +1,10 @@
+require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const Registerusers = require('./model');
 const cors = require('cors')
 const app = express();
+const port  = process.env.PORT || 5000 ;
 const path = require('path');
 
 app.use(express.json());
@@ -203,8 +205,8 @@ app.delete('/deleteUser/:id',async(req,res)=>{
 })
 
 
-app.listen(5000,()=>{
-    console.log('Server running at port 5000....');
+app.listen(port,()=>{
+    console.log('Server running at port'+ port);
 })
 
   
