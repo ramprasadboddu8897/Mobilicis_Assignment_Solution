@@ -9,10 +9,10 @@ In this project, Create a **Node.js** Application using Express Framework and Mo
 - Start up the app using `npm run dev`
 </details>
 
-### Completion Instructions
+### Detailed View of Project
 
 <details>
-<summary>Functionality to be added</summary>
+<summary>Functionality has be added</summary>
 <br/>
 
 The application has five routes that perform different queries on the database:
