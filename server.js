@@ -2,6 +2,14 @@ require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const Registerusers = require('./model');
+
+// Registerusers.updateMany(
+//   {},
+//   { $set: { phone_price: { $toDouble: "$phone_price" } } }
+// )
+// .then(() => console.log('Phone price field updated successfully'))
+// .catch((err) => console.error(err));
+
 const cors = require('cors')
 const app = express();
 const port  = process.env.PORT || 5000 ;
@@ -87,13 +95,20 @@ app.get('/Q1', async (req, res) => {
   });
 
   //Second Query
-  app.get('/Q2', async (req, res) => {
+app.get('/Q2', async (req, res) => {
     try {
-      const users = await Registerusers.find({
-        gender:"Male",
-        phone_price: {$gt: "10000"}
-      }).maxTimeMS(30000);
-      res.json(users);
+    //   const users = await Registerusers.aggregate([
+    //   {
+    //     $match: {
+    //       gender: "Male",
+    //       $expr: { $gt: [{ $toInt: "$phone_price" }, 10000] }
+    //     }
+    //   }
+    // ]).maxTimeMS(30000);
+    const users = await Registerusers.find(
+      { gender: "Male", phone_price: { $gt: [{ $toInt: "$phone_price" }, 10000] } }
+    ).maxTimeMS(30000);
+    res.json(users);
     } catch (err) {
       res.status(500).json({ error: 'Internal server error' });
     }
@@ -206,7 +221,7 @@ app.delete('/deleteUser/:id',async(req,res)=>{
 
 
 app.listen(port,()=>{
-    console.log('Server running at port'+ port);
+    console.log('Server running at port '+ port);
 })
 
   
