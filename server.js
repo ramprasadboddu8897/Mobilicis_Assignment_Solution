@@ -91,7 +91,7 @@ app.get('/Q1', async (req, res) => {
     try {
       const users = await Registerusers.find({
         gender:"Male",
-        phone_price: {$gt: "$10000"}
+        phone_price: {$gt: "10000"}
       }).maxTimeMS(30000);
       res.json(users);
     } catch (err) {
