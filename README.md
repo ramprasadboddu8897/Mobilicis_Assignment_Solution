@@ -4,8 +4,14 @@ In this project, Create a **Node.js** Application using Express Framework and Mo
 
 <details>
 <summary>Click to view</summary>
+<br/>
 
-- Download dependencies by running `npm install`
+After opening the MOBILICIS_ASSIGNMENT file in VS Code Editor
+
+- open Terminal and type `cd ./client` in CLI
+- Download dependencies by running `npm install` for Front-End Client-side in CLI
+- again type `cd ..` in CLI
+- Download dependencies by running `npm install` for Back-End server-side in CLI
 - Start up the app using `npm run dev`
 </details>
 
