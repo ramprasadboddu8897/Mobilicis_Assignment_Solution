@@ -9,10 +9,11 @@ app.use(express.json());
 app.use(cors({origin:'*'}));
 
 //Static Files
-app.use(express.static(path.join(__dirname,'./client/build')));
-app.get('*',function(req,res){
-    res.sendFile(path.join(__dirname,'./client/build/index.html'));
-});
+
+// app.use(express.static(path.join(__dirname,'./client/build')));
+// app.get('*',function(req,res){
+//     res.sendFile(path.join(__dirname,'./client/build/index.html'));
+// });
 
 mongoose.connect('mongodb+srv://ramprasadboddu88:mobilicisDB@clustermobilicisdb.ei5pprr.mongodb.net/SampleDB').then(
     () => console.log("DB connection Established")
@@ -88,7 +89,7 @@ app.get('/Q1', async (req, res) => {
     try {
       const users = await Registerusers.find({
         gender:"Male",
-        phone_price: {$gt: 10000}
+        phone_price: {$gt: "$10000"}
       }).maxTimeMS(30000);
       res.json(users);
     } catch (err) {
