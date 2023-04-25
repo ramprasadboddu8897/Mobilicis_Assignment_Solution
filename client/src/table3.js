@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { BASE_URL } from "./url_controller";
 import { TailSpin } from 'react-loader-spinner';
 
 const Table3 = ()=> {
@@ -8,7 +9,7 @@ const Table3 = ()=> {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get('http://localhost:5000/Q3');
+      const result = await axios.get(`${BASE_URL}/Q3`);
       setData(result.data);
       setIsLoading(false);
     };
