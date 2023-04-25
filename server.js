@@ -1,31 +1,22 @@
-require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const Registerusers = require('./model');
 
-// Registerusers.updateMany(
-//   {},
-//   { $set: { phone_price: { $toDouble: "$phone_price" } } }
-// )
-// .then(() => console.log('Phone price field updated successfully'))
-// .catch((err) => console.error(err));
-
 const cors = require('cors')
+require('dotenv').config();
+
 const app = express();
-const port  = process.env.PORT || 5000 ;
+const PORT  = process.env.PORT || 5000 ;
+const CONNECTION_URL = process.env.CONNECTION_URL
 const path = require('path');
 
 app.use(express.json());
 app.use(cors({origin:'*'}));
 
-//Static Files
-
-// app.use(express.static(path.join(__dirname,'./client/build')));
-// app.get('*',function(req,res){
-//     res.sendFile(path.join(__dirname,'./client/build/index.html'));
-// });
-
-mongoose.connect(process.env.CONNECTION_URL).then(
+mongoose.connect(CONNECTION_URL,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(
     () => console.log("DB connection Established")
 )
 
@@ -97,17 +88,17 @@ app.get('/Q1', async (req, res) => {
   //Second Query
 app.get('/Q2', async (req, res) => {
     try {
-    //   const users = await Registerusers.aggregate([
-    //   {
-    //     $match: {
-    //       gender: "Male",
-    //       $expr: { $gt: [{ $toInt: "$phone_price" }, 10000] }
-    //     }
-    //   }
-    // ]).maxTimeMS(30000);
-    const users = await Registerusers.find(
-      { gender: "Male", phone_price: { $gt: [{ $toInt: "$phone_price" }, 10000] } }
-    ).maxTimeMS(30000);
+    const users = await Registerusers.aggregate([
+      {
+        $match: {
+          gender: "Male",
+          $expr: {
+            $gt: [{ $toDouble: "$phone_price" }, 10000]
+          }
+        }
+      }
+    ])
+    // console.log(users)
     res.json(users);
     } catch (err) {
       res.status(500).json({ error: 'Internal server error' });
@@ -200,8 +191,8 @@ app.delete('/deleteUser/:id',async(req,res)=>{
 })
 
 
-app.listen(port,()=>{
-    console.log('Server running at port '+ port);
+app.listen(PORT,()=>{
+    console.log('Server running at port '+ PORT);
 })
 
   
