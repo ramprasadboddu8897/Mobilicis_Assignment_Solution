@@ -25,7 +25,7 @@ app.use(cors({origin:'*'}));
 //     res.sendFile(path.join(__dirname,'./client/build/index.html'));
 // });
 
-mongoose.connect('mongodb+srv://ramprasadboddu88:mobilicisDB@clustermobilicisdb.ei5pprr.mongodb.net/SampleDB').then(
+mongoose.connect(process.env.CONNECTION_URL).then(
     () => console.log("DB connection Established")
 )
 
@@ -183,26 +183,6 @@ app.get('/Q5', async (req, res) => {
       ]);
     //   console.log(users);
       res.json(users);
-
-    // const groupedByCity = await Registerusers.reduce((acc, curr) => {
-    //     const city = curr.city;
-    //     if (acc[city]) {
-    //       acc[city].push(curr);
-    //     } else {
-    //       acc[city] = [curr];
-    //     }
-    //     return acc;
-    //   }, {});
-      
-    //   const cityStats = Object.entries(groupedByCity).map(([city, cityUsers]) => {
-    //     const totalIncome = cityUsers.reduce((acc, curr) => acc + curr.income, 0);
-    //     const avgIncome = totalIncome / cityUsers.length;
-    //     return { city, avgIncome };
-    //   });
-      
-    //   const top10Cities = cityStats.sort((a, b) => b.avgIncome - a.avgIncome).slice(0, 10);
-
-    //   res.json(top10Cities);
     } catch (err) {
       res.status(500).json({ error: 'Internal server error' });
     }
